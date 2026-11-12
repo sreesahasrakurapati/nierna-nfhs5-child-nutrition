@@ -1,0 +1,12 @@
+# data (large / not for git) - share the raw CSV via Drive instead
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+# python
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
+.DS_Store
+.vscode/

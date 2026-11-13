@@ -17,7 +17,8 @@
 - **What we did:** Applied screening limits to identify implausible z-scores: HAZ (-6 to +6), WAZ (-6 to +5), WHZ (-5 to +5) and BAZ (-5 to +5).
 - **Why:** Values outside these limits may indicate measurement or recording problems and should not be treated as ordinary growth measurements.
 - **Alternative:** Keep all values without screening or remove entire child records. We screened the affected z-score values instead.
-- **Audit result:** No values outside these limits remained in the cleaned z-score variables. These are screening thresholds and should be described as such.
+- **Audit result:** Our WHO-range check found 0 extra cases because DHS had already flagged implausible measurements before releasing the data: code 9998 (z-score outside WHO limits) and 9996 (height/weight out of range). We convert these codes to NaN first. DHS-flagged counts: HAZ 5,045 (9998), WHZ 12,844 (9996 + 9998). In total 6.91% of children have at least one flagged measurement.
+- **Birth weight:** values outside 500–6,000 g (e.g. 9,980 g) are biologically implausible and set to NaN (n = 137).
 
 ### 4. Dropped columns
 

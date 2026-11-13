@@ -1,6 +1,6 @@
 # C – Features, selection, PCA, clusters
 Numbers below are from `02_feature_engineering.py` and `04_selection_pca_clusters.py` on the full
-NFHS-5 file (221,263 children, 707 districts), using A's cleaning from `a/cleaning-missing`.
+NFHS-5 file (221,263 children, 707 districts), using A's cleaning (special codes → NaN, birth weight capped at 500–6,000 g).
 
 ## 1. Engineered features and why they exist
 | Feature | How | Why |
@@ -69,39 +69,39 @@ Clusters are formed on these 4 PCs.
 | k | silhouette | Davies-Bouldin | stability (ARI) | smallest cluster |
 |---|---|---|---|---|
 | 2 | **0.302** | 1.237 | 1.000 | 299 |
-| 3 | 0.223 | 1.497 | 0.959 | 175 |
-| **4** | 0.214 | 1.398 | 0.935 | **154** |
-| 5 | 0.224 | 1.346 | 0.969 | 69 |
-| 6 | 0.214 | 1.286 | 0.905 | 62 |
+| 3 | 0.223 | 1.497 | 0.960 | 175 |
+| **4** | 0.215 | 1.391 | 0.957 | **152** |
+| 5 | 0.223 | 1.346 | 0.962 | 69 |
+| 6 | 0.215 | 1.286 | 0.891 | 62 |
 
 - Elbow: inertia falls smoothly, no sharp bend.
 - Silhouette is best at k = 2, then flat (0.21–0.22) for k = 3…10.
 - **Decision: k = 4.** k = 2 only splits "high vs low burden", which gives no different actions.
-  For k ≥ 3 the metrics are nearly tied, so we chose the k that is stable (ARI 0.935), keeps every
-  cluster large (≥ 154 districts) and gives four profiles that each need a *different* action.
-  k = 5 was checked: similar silhouette but one cluster shrinks to 69 districts.
+  For k ≥ 3 the metrics are nearly tied, so we chose the k that is stable (ARI 0.957), keeps every
+  cluster large (≥ 152 districts) and gives four profiles that each need a *different* action.
+  k = 5 was checked: same silhouette (0.223) but one cluster shrinks to 69 districts.
 - **Honest limit:** silhouette ≈ 0.21 means districts form a continuum, not naturally separate groups.
   The clusters are *profiles for targeting*, not hard categories.
 
 ## 6. Cluster profiles (cluster_profile.csv, 1 = lowest stunting; mean of district %)
 | Cluster | Districts | Stunting | Wasting | Underweight | Low BW | % poorest | % mother no edu | % rural | Implausible % | HAZ missing % |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 1 | 164 | 27.9 | 14.1 | 22.4 | 18.8 | 3.5 | 8.7 | 50.3 | 6.0 | 8.9 |
-| 2 | 156 | 28.6 | 14.1 | 20.1 | 11.6 | 19.4 | 13.2 | 83.0 | 6.6 | 5.7 |
-| 3 | 228 | 33.8 | **23.0** | 34.2 | 17.2 | 21.0 | 15.2 | 77.6 | **8.1** | 7.8 |
-| 4 | 159 | **43.9** | 21.1 | **39.4** | 18.5 | **47.7** | **35.8** | **89.0** | 7.4 | 6.5 |
+| 1 | 167 | 27.8 | 14.1 | 22.4 | 18.8 | 3.5 | 8.7 | 50.8 | 6.1 | 8.9 |
+| 2 | 152 | 28.8 | 13.9 | 20.2 | 11.5 | 19.9 | 13.6 | 83.2 | 6.6 | 5.6 |
+| 3 | 229 | 33.7 | **22.9** | 34.1 | 17.1 | 20.8 | 15.1 | 77.6 | **8.1** | 7.9 |
+| 4 | 159 | **43.8** | 21.3 | **39.4** | 18.5 | **47.8** | **35.9** | **88.9** | 7.5 | 6.5 |
 
 | Cluster | Name | Action |
 |---|---|---|
 | 1 | Better-off but not safe | Low poverty yet 28% stunted and the highest low birth weight → maternal nutrition and antenatal care |
 | 2 | Rural, moderate burden | Lowest low birth weight; keep routine anganwadi growth monitoring |
-| 3 | Acute hotspot (largest group) | Highest wasting (23%) → screening and treatment of severe wasting, supplementary feeding |
+| 3 | Acute hotspot (largest group) | Highest wasting (22.9%) → screening and treatment of severe wasting, supplementary feeding |
 | 4 | Deep deprivation | Half the children in the poorest quintile, 36% of mothers with no schooling, 44% stunted → combined poverty, education and nutrition support |
 
 **District-level correlation:** stunting vs % mothers with no education, Spearman **0.54**.
 
 **Data quality per cluster:**
-- Flagged (implausible) measurements are spread across all clusters (6.0–8.1%); district stunting vs
+- Flagged (implausible) measurements are spread across all clusters (6.1–8.1%); district stunting vs
   implausible % Spearman = **0.08**, so errors are *not* what drives the high-burden map.
 - Cluster 3, the wasting hotspot, has the most flagged records (8.1%). Wasting uses weight-for-height,
   the most-flagged measurement, so its wasting figure needs the most careful re-measurement.

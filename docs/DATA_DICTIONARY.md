@@ -24,4 +24,6 @@
 
 ## Engineered features (02_feature_engineering.py)
 stunted, severe_stunt, wasted, severe_wasted, underweight, overweight, any_failure, n_failures,
-age_group, low_birth_wt, bw_recorded, multiple_child_mother, birth_season, bmi_proxy, wealth_rank, edu_rank.
+age_group, low_birth_wt, bw_recorded, multiple_child_mother, birth_season, bmi_proxy, wealth_rank, edu_rank,
+is_poorest, mom_no_edu, is_rural, dhs_flag_haz/waz/whz/baz (raw code 9996/9997/9998 = DHS implausible flag),
+implausible_any, haz_missing.

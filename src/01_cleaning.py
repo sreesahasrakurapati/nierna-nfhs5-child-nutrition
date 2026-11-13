@@ -71,6 +71,11 @@ for col, codes in SPECIAL_CODES.items():
 for col, codes in SPECIAL_CODES.items():
     df[col] = df[col].replace(codes, np.nan)
 
+# Biologically implausible birth weights (e.g. 9,980 g) -> missing
+bw_bad = df["birth_weight_g"].notna() & ~df["birth_weight_g"].between(500, 6000)
+print("Implausible birth weights set to NaN:", int(bw_bad.sum()))
+df.loc[bw_bad, "birth_weight_g"] = np.nan
+
 # ---- 4. Unit conversions ----
 # DHS anthropometric z-scores have two implied decimal places.
 for col in ["haz", "waz", "whz", "baz"]:

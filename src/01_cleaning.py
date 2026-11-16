@@ -1,5 +1,5 @@
 
-"""PERSON A - Data quality and cleaning.
+"""A - Data quality and cleaning.
 Input: data/raw/nfhs5_NIEnarya.csv
 Output: data/processed/nfhs5_clean.csv
 

@@ -1,0 +1,59 @@
+Mutual information (top 10):
+ birth_order_idx            0.0232
+bw_recorded                0.0211
+mother_edu_Secondary       0.0198
+sex_Male                   0.0179
+multiple_child_mother      0.0148
+caste_OBC                  0.0125
+wealth_quintile_Poorest    0.0122
+age_months                 0.0096
+birth_weight_g             0.0093
+wealth_quintile_Richest    0.0078
+dtype: float64
+RF AUC: 0.652
+
+Child PCA explained variance: [0.613 0.381 0.006 0.001] cumulative: [0.613 0.993 0.999 1.   ]
+      PC1   PC2
+haz -0.04  0.81
+waz  0.49  0.53
+whz  0.62 -0.15
+baz  0.61 -0.22
+
+Districts: 707 | dropped (n < 30): 0
+District PCA: keep 4 PCs (86.7% of variance)
+                 PC1   PC2   PC3   PC4
+stunting        0.44  0.01  0.16 -0.52
+wasting         0.32  0.45 -0.58  0.28
+underweight     0.48  0.35 -0.20 -0.10
+low_bw          0.13  0.52  0.72  0.43
+pct_poorest     0.43 -0.34  0.03  0.06
+pct_mom_no_edu  0.41 -0.18  0.29 -0.23
+pct_rural       0.31 -0.51 -0.03  0.64
+
+Choosing k:
+  k  inertia  silhouette  davies_bouldin  stability_ari  smallest_cluster
+ 2 2758.523       0.302           1.237          1.000               299
+ 3 2325.970       0.223           1.497          0.959               175
+ 4 2006.966       0.214           1.398          0.935               154
+ 5 1782.952       0.224           1.346          0.969                69
+ 6 1606.085       0.214           1.286          0.905                62
+ 7 1468.653       0.217           1.214          0.887                62
+ 8 1344.714       0.222           1.191          0.930                60
+ 9 1268.773       0.211           1.221          0.952                49
+10 1209.126       0.209           1.248          0.652                41
+Best silhouette at k = 2
+
+Cluster profiles (mean of district %):
+          districts  children  stunting  wasting  underweight  low_bw  pct_poorest  pct_mom_no_edu  pct_rural  pct_implausible  pct_haz_missing
+cluster                                                                                                                                       
+1              164   40212.0      27.9     14.1         22.4    18.8          3.5             8.7       50.3              6.0              8.9
+2              156   43819.0      28.6     14.1         20.1    11.6         19.4            13.2       83.0              6.6              5.7
+3              228   68437.0      33.8     23.0         34.2    17.2         21.0            15.2       77.6              8.1              7.8
+4              159   68795.0      43.9     21.1         39.4    18.5         47.7            35.8       89.0              7.4              6.5
+  cluster 1 e.g.: Puducherry #636, Uttar Pradesh #147, Karnataka #562
+  cluster 2 e.g.: Meghalaya #298, Mizoram #288, Uttar Pradesh #199
+  cluster 3 e.g.: Karnataka #556, Gujarat #860, Uttar Pradesh #165
+  cluster 4 e.g.: Jharkhand #368, Meghalaya #878, Karnataka #580
+Spearman stunting vs mother-no-edu (district): 0.54
+Spearman stunting vs implausible % (district): 0.08
+saved /Users/isirirram/nierna-nfhs5-child-nutrition/data/processed/district_profile.csv and cluster_profile.csv
